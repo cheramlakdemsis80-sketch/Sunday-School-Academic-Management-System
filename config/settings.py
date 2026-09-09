@@ -4,7 +4,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = "change-this-secret-key-before-production"
 DEBUG = True
-ALLOWED_HOSTS = ["127.0.0.1", "localhost", "192.168.1.2"]
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "localhost",
+    "192.168.1.2",
+    "sunday-school-academic-management-system.onrender.com",
+]
 
 INSTALLED_APPS = [
     "django.contrib.admin",
