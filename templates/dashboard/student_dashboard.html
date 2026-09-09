@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Student Dashboard</h2>
+{% if student %}
+<div class="card p-4"><h4>Welcome, {{ student.full_name }}</h4>
+<p><b>Student ID:</b> {{ student.student_id }}</p>
+<p><b>Class:</b> {{ student.school_class }}</p>
+<a class="btn btn-primary" href="{% url 'student_profile' %}">My Profile</a>
+<a class="btn btn-success" href="{% url 'student_results' %}">My Results</a></div>
+{% else %}<div class="alert alert-warning">Student profile has not been created yet.</div>{% endif %}
+{% endblock %}
+

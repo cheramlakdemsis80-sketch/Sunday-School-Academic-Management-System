@@ -1,0 +1,4 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card p-4 mx-auto" style="max-width:850px"><h2 class="text-center text-success">Certificate Verified</h2><p class="text-center">The certificate number below is registered in the Sunday School Academic System.</p><hr><div class="row g-3"><div class="col-md-6"><b>Certificate No.</b><br>{{ certificate.certificate_number }}</div><div class="col-md-6"><b>Student</b><br>{{ certificate.student.full_name }}</div><div class="col-md-6"><b>Student ID</b><br>{{ certificate.student.student_id }}</div><div class="col-md-6"><b>Class</b><br>{{ certificate.student.school_class }}</div><div class="col-md-6"><b>Semester</b><br>{{ certificate.semester }}</div><div class="col-md-6"><b>Issued</b><br>{{ certificate.issued_at|date:"Y-m-d" }}</div><div class="col-md-6"><b>Total</b><br>{{ total }}</div><div class="col-md-6"><b>Average</b><br>{{ average|floatformat:2 }}</div></div></div>
+{% endblock %}

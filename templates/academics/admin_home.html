@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Admin Management</h2><p class="text-muted">Configure the academic structure before entering results.</p>
+<div class="row g-3">
+{% for url,label,count in links %}
+<div class="col-md-3"><a href="{{ url }}" class="text-decoration-none"><div class="card p-3"><div>{{ label }}</div><div class="stat">{{ count }}</div></div></a></div>
+{% endfor %}
+</div>
+<div class="row g-2 mt-4">
+<div class="col-md-3"><a class="btn btn-primary w-100" href="{% url 'years' %}">Academic Years</a></div>
+<div class="col-md-3"><a class="btn btn-primary w-100" href="{% url 'semesters' %}">Semesters</a></div>
+<div class="col-md-3"><a class="btn btn-primary w-100" href="{% url 'classes' %}">Classes</a></div>
+<div class="col-md-3"><a class="btn btn-primary w-100" href="{% url 'subjects' %}">Subjects</a></div>
+<div class="col-md-3"><a class="btn btn-primary w-100" href="{% url 'student_list' %}">Students</a></div>
+<div class="col-md-3"><a class="btn btn-primary w-100" href="{% url 'teacher_list' %}">Teachers</a></div>
+<div class="col-md-3"><a class="btn btn-primary w-100" href="{% url 'assignments' %}">Teacher Assignments</a></div>
+<div class="col-md-3"><a class="btn btn-success w-100" href="{% url 'admin_results' %}">Submitted Results</a></div>
+</div>
+{% endblock %}

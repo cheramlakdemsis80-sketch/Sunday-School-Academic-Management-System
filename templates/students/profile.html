@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>My Student Profile</h2>
+<div class="card p-4">
+<p><b>Student ID:</b> {{ student.student_id }}</p>
+<p><b>Name:</b> {{ student.full_name }}</p>
+<p><b>Gender:</b> {{ student.get_gender_display }}</p>
+<p><b>Class:</b> {{ student.school_class }}</p>
+<p><b>Academic Year:</b> {{ student.school_class.academic_year }}</p>
+<p><b>Phone:</b> {{ student.phone|default:"-" }}</p>
+<p><b>Status:</b> {{ student.get_status_display }}</p>
+</div>
+{% endblock %}
