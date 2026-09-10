@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Teacher Result Entry</h2>
+{% if active_semester %}
+<div class="alert alert-success">Active semester: <b>{{ active_semester.get_name_display }}</b> — Results can be entered only for this semester.</div>
+{% else %}
+<div class="alert alert-warning">No active semester is configured. Please contact the Admin.</div>
+{% endif %}
+<div class="row g-3">
+{% for a in assignments %}
+<div class="col-md-6"><div class="card p-4 h-100">
+<h5>{{ a.subject.name }}</h5>
+<div><b>Class:</b> {{ a.school_class }}</div><div><b>Academic Year:</b> {{ a.academic_year }}</div>
+<div class="mt-3">
+{% if active_semester and active_semester.academic_year_id == a.academic_year_id %}
+<a class="btn btn-primary" href="{% url 'enter_results' a.id active_semester.id %}">Enter {{ active_semester.get_name_display }} Results</a>
+{% else %}<span class="text-muted">This assignment has no active semester.</span>{% endif %}
+</div></div></div>
+{% empty %}<div class="alert alert-warning">No active subject assignments found.</div>{% endfor %}
+</div>
+{% endblock %}

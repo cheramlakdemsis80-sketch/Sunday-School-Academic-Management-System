@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Admin Dashboard</h2>
+<p class="text-muted">Phase 1 + Phase 2 + Phase 3 + Phase 4 management center</p>
+<div class="row g-3 mb-4">
+<div class="col-md-3"><div class="card p-3"><div>Academic Years</div><div class="stat">{{ academic_years }}</div></div></div>
+<div class="col-md-3"><div class="card p-3"><div>Semesters</div><div class="stat">{{ semesters }}</div></div></div>
+<div class="col-md-3"><div class="card p-3"><div>Classes</div><div class="stat">{{ classes }}</div></div></div>
+<div class="col-md-3"><div class="card p-3"><div>Subjects</div><div class="stat">{{ subjects }}</div></div></div>
+<div class="col-md-3"><div class="card p-3"><div>Students</div><div class="stat">{{ students }}</div></div></div>
+<div class="col-md-3"><div class="card p-3"><div>Teachers</div><div class="stat">{{ teachers }}</div></div></div>
+<div class="col-md-3"><div class="card p-3"><div>Assignments</div><div class="stat">{{ assignments }}</div></div></div>
+</div>
+<div class="card p-4">
+<h5>Academic & Result Management</h5>
+<div class="row g-2">
+<div class="col-md-3"><a class="btn btn-outline-primary w-100" href="{% url 'admin_home' %}">Management Home</a></div>
+<div class="col-md-3"><a class="btn btn-outline-primary w-100" href="{% url 'years' %}">Academic Years</a></div>
+<div class="col-md-3"><a class="btn btn-outline-primary w-100" href="{% url 'semesters' %}">Semesters</a></div>
+<div class="col-md-3"><a class="btn btn-outline-primary w-100" href="{% url 'classes' %}">Classes</a></div>
+<div class="col-md-3"><a class="btn btn-outline-primary w-100" href="{% url 'subjects' %}">Subjects</a></div>
+<div class="col-md-3"><a class="btn btn-outline-primary w-100" href="{% url 'student_list' %}">Students</a></div>
+<div class="col-md-3"><a class="btn btn-outline-primary w-100" href="{% url 'teacher_list' %}">Teachers</a></div>
+<div class="col-md-3"><a class="btn btn-outline-primary w-100" href="{% url 'assignments' %}">Assignments</a></div>
+<div class="col-md-3"><a class="btn btn-outline-success w-100" href="{% url 'admin_results' %}">Submitted Results</a></div>
+<div class="col-md-3"><a class="btn btn-outline-success w-100" href="{% url 'certificate_home' %}">Certificates</a></div>
+</div></div>
+{% endblock %}

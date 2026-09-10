@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Certificates</h2>
+<p class="text-muted">Certificates are generated automatically after all required subject results are approved.</p>
+<form method="get" class="row g-2 mb-4">
+  <div class="col-md-6">
+    <select name="semester" class="form-select">
+      {% for s in semesters %}<option value="{{ s.id }}" {% if selected and selected.id == s.id %}selected{% endif %}>{{ s }}</option>{% endfor %}
+    </select>
+  </div>
+  <div class="col-auto"><button class="btn btn-primary">Check</button></div>
+</form>
+{% if selected %}
+<div class="alert alert-info"><b>{{ selected }}</b>: {{ eligible|length }} eligible student(s).</div>
+<div class="table-responsive">
+<table class="table table-bordered bg-white align-middle">
+<thead><tr><th>Student</th><th>ID</th><th>Class</th><th style="min-width:420px">Certificate content entered by Admin</th><th>Certificate</th></tr></thead>
+<tbody>
+{% for student in eligible %}
+  {% for c in certificates %}
+    {% if c.student_id == student.id %}
+    <tr>
+      <td>{{ student.full_name }}</td><td>{{ student.student_id }}</td><td>{{ student.school_class }}</td>
+      <td>
+        <form method="post" action="{% url 'save_certificate_comment' c.id %}">
+          {% csrf_token %}
+          <label class="form-label"><b>የውጤት አሰጣጥ ደንብ</b></label>
+          <textarea name="grading_rule" class="form-control mb-2" rows="6" placeholder="የውጤት አሰጣጥ ደንብ">{{ c.grading_rule }}</textarea>
+          <label class="form-label"><b>የህፃናት ክፍል አስተያየት</b></label>
+          <textarea name="admin_comment" class="form-control mb-2" rows="4" placeholder="የህፃናት ክፍል አስተያየት">{{ c.admin_comment }}</textarea>
+          <input type="hidden" name="next" value="{{ request.get_full_path }}">
+          <button class="btn btn-sm btn-primary">Save</button>
+        </form>
+      </td>
+      <td><a class="btn btn-sm btn-success" href="{% url 'download_certificate' c.id %}">Download PDF</a></td>
+    </tr>
+    {% endif %}
+  {% endfor %}
+{% empty %}
+<tr><td colspan="5">No certificate is available yet. Approve all required subject results first.</td></tr>
+{% endfor %}
+</tbody></table></div>
+{% endif %}
+{% endblock %}

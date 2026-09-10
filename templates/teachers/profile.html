@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>My Teacher Profile</h2>
+<div class="card p-4 mb-4"><p><b>Teacher ID:</b> {{ teacher.teacher_id }}</p><p><b>Name:</b> {{ teacher.user.get_full_name }}</p><p><b>Phone:</b> {{ teacher.phone|default:"-" }}</p><p><b>Status:</b> {{ teacher.get_status_display }}</p></div>
+<h4>My Assignments</h4>
+<div class="table-responsive"><table class="table table-bordered"><tr><th>Academic Year</th><th>Class</th><th>Subject</th></tr>{% for a in assignments %}<tr><td>{{ a.academic_year }}</td><td>{{ a.school_class }}</td><td>{{ a.subject }}</td></tr>{% empty %}<tr><td colspan="3">No assignments.</td></tr>{% endfor %}</table></div>
+{% endblock %}

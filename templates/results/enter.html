@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load results_tags %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3"><div><h2>Enter Results</h2><div class="text-muted">{{ assignment.subject.name }} · {{ assignment.school_class }} · {{ semester.get_name_display }}</div></div><a href="{% url 'teacher_result_home' %}" class="btn btn-outline-secondary">Back</a></div>
+<div class="alert alert-info"><b>Assessment structure for {{ assignment.subject.name }}</b>. Total maximum: <b>{{ assignment.subject.max_mark }}</b>; pass mark: <b>{{ assignment.subject.pass_mark }}</b>.</div>
+<form method="post">{% csrf_token %}
+<div class="table-responsive"><table class="table table-bordered align-middle bg-white">
+<thead><tr><th>#</th><th>Student ID</th><th>Student Name</th>
+{% for field,label,maxfield in components %}<th>{{ label }}<br><small>/ {{ assignment.subject|getattr_filter:maxfield }}</small></th>{% endfor %}
+<th>Total</th><th>Remarks</th><th>Status</th></tr></thead>
+<tbody>
+{% for student in students %}{% with r=results|get_item:student.pk %}<tr>
+<td>{{ forloop.counter }}</td><td>{{ student.student_id }}</td><td>{{ student.full_name }}</td>
+<td><input name="midterm_mark_{{ student.pk }}" value="{% if r %}{{ r.midterm_mark }}{% else %}0{% endif %}" type="number" min="0" max="{{ assignment.subject.midterm_max }}" step="0.01" class="form-control" {% if r and r.status == 'SUBMITTED' %}readonly{% endif %}></td>
+<td><input name="assignment_mark_{{ student.pk }}" value="{% if r %}{{ r.assignment_mark }}{% else %}0{% endif %}" type="number" min="0" max="{{ assignment.subject.assignment_max }}" step="0.01" class="form-control" {% if r and r.status == 'SUBMITTED' %}readonly{% endif %}></td>
+<td><input name="summary_mark_{{ student.pk }}" value="{% if r %}{{ r.summary_mark }}{% else %}0{% endif %}" type="number" min="0" max="{{ assignment.subject.summary_max }}" step="0.01" class="form-control" {% if r and r.status == 'SUBMITTED' %}readonly{% endif %}></td>
+<td><input name="exam_mark_{{ student.pk }}" value="{% if r %}{{ r.exam_mark }}{% else %}0{% endif %}" type="number" min="0" max="{{ assignment.subject.exam_max }}" step="0.01" class="form-control" {% if r and r.status == 'SUBMITTED' %}readonly{% endif %}></td>
+<td><input name="notebook_mark_{{ student.pk }}" value="{% if r %}{{ r.notebook_mark }}{% else %}0{% endif %}" type="number" min="0" max="{{ assignment.subject.notebook_max }}" step="0.01" class="form-control" {% if r and r.status == 'SUBMITTED' %}readonly{% endif %}></td>
+<td><b>{{ r.mark|default:"0" }}</b> / {{ assignment.subject.max_mark }}</td>
+<td><input name="remarks_{{ student.pk }}" value="{% if r %}{{ r.remarks }}{% endif %}" class="form-control" {% if r and r.status == 'SUBMITTED' %}readonly{% endif %}></td>
+<td>{% if r %}<span class="badge {% if r.status == 'SUBMITTED' %}bg-success{% elif r.status == 'APPROVED' %}bg-primary{% elif r.status == 'REJECTED' %}bg-danger{% else %}bg-secondary{% endif %}">{{ r.get_status_display }}</span>{% else %}<span class="text-muted">Not entered</span>{% endif %}</td>
+</tr>{% endwith %}{% empty %}<tr><td colspan="11">No active students in this class.</td></tr>{% endfor %}
+</tbody></table></div>
+<div class="d-flex gap-2 mt-3"><button name="action" value="save" class="btn btn-outline-primary">Save Draft</button><button name="action" value="submit" class="btn btn-primary" onclick="return confirm('Submit these results to Admin for approval?');">Submit Results</button></div>
+</form>
+{% endblock %}

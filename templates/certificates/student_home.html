@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>My Certificates</h2>
+<p><b>{{ student.full_name }}</b> — {{ student.student_id }}</p>
+<div class="table-responsive"><table class="table table-bordered bg-white"><thead><tr><th>Certificate No.</th><th>Semester</th><th>Issued</th><th>Action</th></tr></thead><tbody>{% for c in certificates %}<tr><td>{{ c.certificate_number }}</td><td>{{ c.semester }}</td><td>{{ c.issued_at|date:"Y-m-d" }}</td><td><a class="btn btn-sm btn-primary" href="{% url 'download_certificate' c.id %}">Download PDF</a> <a class="btn btn-sm btn-outline-secondary" href="{% url 'verify_certificate' c.verification_token %}">Verify</a></td></tr>{% empty %}<tr><td colspan="4">No certificate has been generated yet.</td></tr>{% endfor %}</tbody></table></div>
+{% endblock %}

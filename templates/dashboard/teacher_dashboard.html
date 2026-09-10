@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Teacher Dashboard</h2>
+<div class="card p-4 mb-3">
+<a href="{% url 'teacher_profile' %}" class="btn btn-outline-primary me-2">My Profile</a>
+<a href="{% url 'teacher_assignments' %}" class="btn btn-primary">My Assignments</a>
+<a href="{% url 'teacher_result_home' %}" class="btn btn-success">Enter Results</a>
+</div>
+<h5>Assigned Classes & Subjects</h5>
+<div class="table-responsive"><table class="table table-bordered">
+<tr><th>Academic Year</th><th>Class</th><th>Subject</th></tr>
+{% for a in assignments %}<tr><td>{{ a.academic_year }}</td><td>{{ a.school_class }}</td><td>{{ a.subject }}</td></tr>{% empty %}<tr><td colspan="3">No assignments yet.</td></tr>{% endfor %}
+</table></div>
+{% endblock %}
